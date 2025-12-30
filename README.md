@@ -34,7 +34,7 @@ For the **40% of people** with food allergies, strict religious diets (Vegetaria
 
 | Component | Technology |
 | :--- | :--- |
-| **AI Model** | **Google Gemini 1.5 Flash** (Vision & Reasoning) |
+| **AI Model** | **Google Gemini 2.5 Flash** (Vision & Reasoning) |
 | **Backend** | Python, **FastAPI** |
 | **Frontend** | HTML5, CSS3, JavaScript (Responsive) |
 | **Tunneling** | Ngrok (for local hosting) |
