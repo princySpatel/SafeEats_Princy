@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SafeEats AI</title>
+    <style>
+       
+        :root {
+            --primary: #2563eb; 
+            --success: #16a34a; 
+            --danger: #dc2626;  
+            --bg: #f3f4f6;
+            --card: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+       
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo { font-size: 2.5rem; margin: 0; }
+        .subtitle { color: #6b7280; font-size: 0.9rem; margin-top: 5px; }
+
+        
+        .card {
+            background: var(--card);
+            width: 100%;
+            max-width: 360px;
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+      
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f9fafb;
+            border-radius: 12px;
+        }
+        .toggle-label { font-weight: 600; font-size: 0.9rem; }
+        
+        .switch {
+            position: relative; display: inline-block; width: 48px; height: 26px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #cbd5e1; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        
+        .btn-upload {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            width: 100%;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-upload:active { transform: scale(0.98); }
+
+       
+        #preview-box {
+            margin-top: 20px; border-radius: 12px; overflow: hidden; display: none;
+            position: relative;
+        }
+        #preview-img { width: 100%; display: block; }
+        
+        
+        .scan-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: rgba(37, 99, 235, 0.8);
+            box-shadow: 0 0 10px var(--primary);
+            animation: scan 2s infinite;
+            display: none;
+        }
+        @keyframes scan { 0% {top: 0;} 50% {top: 100%;} 100% {top: 0;} }
+
+      
+        #result-box { display: none; margin-top: 25px; text-align: left; }
+        
+        .badge {
+            display: inline-block; padding: 6px 12px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 700; text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .badge.safe { background: #dcfce7; color: var(--success); }
+        .badge.unsafe { background: #fee2e2; color: var(--danger); }
+        
+        .product-title { font-size: 1.2rem; font-weight: 700; margin: 0 0 5px 0; }
+        .section-head {
+            font-size: 0.75rem; text-transform: uppercase; color: #9ca3af;
+            font-weight: 700; letter-spacing: 1px; margin-top: 15px;
+        }
+        .text-body { font-size: 0.95rem; line-height: 1.5; color: #374151; }
+        
+        #hidden-input { display: none; }
+
+        .footer {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-align: center;
+            width: 100%;
+            max-width: 360px;
+        }
+        .footer a {
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">🥗</div>
+        <h1 style="margin: 5px 0;">SafeEats</h1>
+        <div class="subtitle">AI Dietary Guardian</div>
+    </div>
+
+    <div class="card">
+        <div class="toggle-container">
+            <span class="toggle-label">Strict Vegetarian</span>
+            <label class="switch">
+                <input type="checkbox" id="veg-mode" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <input type="file" id="hidden-input" accept="image/*" capture="environment">
+        <button class="btn-upload" onclick="document.getElementById('hidden-input').click()">
+            <span>Scan Ingredients</span>
+        </button>
+
+        <div id="preview-box">
+            <div id="scan-effect" class="scan-line"></div>
+            <img id="preview-img" src="">
+        </div>
+
+        <p id="loading-txt" style="display:none; color: #6b7280; font-size: 0.9rem; margin-top:15px;">
+            Analyzing contents...
+        </p>
+
+        <div id="result-box">
+            <span id="status-badge" class="badge">...</span>
+            <h2 id="product-name" class="product-title">Product Name</h2>
+            
+            <div class="section-head">ALERTS</div>
+            <div id="alert-text" class="text-body" style="font-weight: 600;">None</div>
+
+            <div class="section-head">INGREDIENTS</div>
+            <div id="ingredients-text" class="text-body">...</div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>AI can make mistakes. Please verify important dietary info.</p>
+        <p style="margin-top: 8px;">
+            Built with ❤️ by <a href="#" style="pointer-events: none;">Princy Patel</a>
+        </p>
+    </div>
+
+    <script>
+        const input = document.getElementById('hidden-input');
+        const previewBox = document.getElementById('preview-box');
+        const previewImg = document.getElementById('preview-img');
+        const scanLine = document.getElementById('scan-effect');
+        const loadingTxt = document.getElementById('loading-txt');
+        const resultBox = document.getElementById('result-box');
+        const vegMode = document.getElementById('veg-mode');
+
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Preview & Start Animation
+            previewImg.src = URL.createObjectURL(file);
+            previewBox.style.display = 'block';
+            scanLine.style.display = 'block'; 
+            loadingTxt.style.display = 'block';
+            resultBox.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append("file", file);
+
+            try {
+                const response = await fetch("/analyze", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                let parsed;
+                try {
+                    parsed = JSON.parse(data.result);
+                } catch {
+                    parsed = { 
+                        product_name: "Unknown Item",
+                        classification: "Uncertain", 
+                        ingredients: data.result, 
+                        warnings: "Could not parse details." 
+                    };
+                }
+
+                scanLine.style.display = 'none';
+                loadingTxt.style.display = 'none';
+                resultBox.style.display = 'block';
+
+               
+                const isVegMode = vegMode.checked;
+                
+                // Define safe variables with fallbacks
+                let status = parsed.classification || "Uncertain";
+                let warnings = parsed.warnings || "None";
+                let prodName = parsed.product_name || "Scanned Item"; 
+                let ingreds = parsed.ingredients || "No ingredients text detected."; 
+                
+                // Apply Strict Mode Logic
+                if (isVegMode && status === "Non-Vegetarian") {
+                    warnings = "CONTAINS ANIMAL PRODUCTS (Strict Mode)";
+                }
+
+               
+                document.getElementById('product-name').innerText = prodName; 
+                document.getElementById('ingredients-text').innerText = ingreds; 
+                
+                const badge = document.getElementById('status-badge');
+                badge.innerText = status;
+                
+                const alertText = document.getElementById('alert-text');
+                alertText.innerText = warnings;
+
+                if (status === "Vegetarian") {
+                    badge.className = "badge safe";
+                    alertText.style.color = "#16a34a"; 
+                } else if (status === "Non-Vegetarian") {
+                    badge.className = "badge unsafe";
+                    alertText.style.color = "#dc2626"; 
+                } else {
+                    badge.className = "badge";
+                    badge.style.background = "#f3f4f6";
+                    badge.style.color = "#374151";
+                }
+
+            } catch (err) {
+                alert("Error: " + err.message);
+                scanLine.style.display = 'none';
+                loadingTxt.style.display = 'none';
+            }
+        });
+    </script>
+
+    
+</body>
+</html>
