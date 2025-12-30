@@ -17,7 +17,7 @@ For the **40% of people** with food allergies, strict religious diets (Vegetaria
 ## 🚀 The Solution
 **SafeEats** is an AI-powered mobile web app that acts as your personal dietary guardian.
 1.  **Snap a photo** of any food package.
-2.  **Google Gemini 1.5 Flash** analyzes the text and context in seconds.
+2.  **Google Gemini 2.5 Flash** analyzes the text and context in seconds.
 3.  **Get an instant verdict:** "Safe", "Unsafe", or "Warning" based on your strict dietary settings.
 
 ---
