@@ -18,7 +18,7 @@ if not GEMINI_KEY:
 else:
     genai.configure(api_key=GEMINI_KEY)
  
-    model = genai.GenerativeModel('models/gemini-1.5-flash')
+    model = genai.GenerativeModel('models/gemini-2.5-flash')
 
 app = FastAPI()
 
@@ -78,4 +78,5 @@ async def analyze_food(file: UploadFile = File(...)):
         return JSONResponse(content={"result": '{"product_name": "Error", "classification": "Uncertain", "warnings": "Server Error"}'})
 
 if __name__ == "__main__":
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
