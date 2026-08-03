@@ -10,14 +10,16 @@ from PIL import Image
 import io
 
 # CONFIGURATION 
+# This loads variables from a .env file if you are testing locally
 load_dotenv()
-GEMINI_KEY = "AIzaSyBJPMSaRqEWJJEDQE4CAp4pKxYRSIF1Il4"
+
+# This securely grabs the hidden key from the environment
+GEMINI_KEY = os.getenv("GEMINI_API_KEY")
 
 if not GEMINI_KEY:
-    print("WARNING: GEMINI_API_KEY not found in .env file!")
+    print("WARNING: GEMINI_API_KEY not found in environment variables!")
 else:
     genai.configure(api_key=GEMINI_KEY)
- 
     model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 app = FastAPI()
