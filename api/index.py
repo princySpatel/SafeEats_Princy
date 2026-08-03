@@ -40,7 +40,7 @@ async def serve_ui():
     
     return FileResponse("../frontend/index.html")
 
-@app.post("/analyze")
+@app.post("/api/analyze")
 async def analyze_food(file: UploadFile = File(...)):
     try:
       
