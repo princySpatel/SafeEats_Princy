@@ -4,6 +4,7 @@
 SafeEats is an AI-powered web application designed to help users quickly and accurately scan food ingredient labels to determine if a product meets their dietary restrictions. 
 
 By simply uploading a photo of an ingredient list, SafeEats leverages advanced generative AI to analyze the text, identify hidden animal-derived ingredients, and provide an immediate "Safe" or "Unsafe" classification.
+**Watch the Demo:** [Click here to watch the SafeEats Demo on YouTube](https://www.youtube.com/watch?v=SXfQTDP2J1g)
 
 ##  Features
 
