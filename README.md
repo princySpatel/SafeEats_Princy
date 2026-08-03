@@ -1,5 +1,5 @@
 # 🥗 SafeEats: AI Dietary Guardian
-safeeats-princy.vercel.app
+**Live Demo:** [Try SafeEats Here](https://safeeats-princy.vercel.app/)
 
 SafeEats is an AI-powered web application designed to help users quickly and accurately scan food ingredient labels to determine if a product meets their dietary restrictions. 
 
