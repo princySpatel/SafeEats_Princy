@@ -20,7 +20,7 @@ if not GEMINI_KEY:
     print("WARNING: GEMINI_API_KEY not found in environment variables!")
 else:
     genai.configure(api_key=GEMINI_KEY)
-    model = genai.GenerativeModel('models/gemini-1.5-flash')
+    model = genai.GenerativeModel('models/gemini-3.6-flash')
 
 app = FastAPI()
 
